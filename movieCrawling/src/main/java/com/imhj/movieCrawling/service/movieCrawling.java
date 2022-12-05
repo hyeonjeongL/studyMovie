@@ -17,7 +17,7 @@ public class movieCrawling {
 	
 	public static void main(String[] args) throws Exception, InterruptedException {
 		
-		final String url = "https://movie.naver.com/movieChartJson.naver?type=BOXOFFICE";
+		String url = "https://movie.naver.com/movieChartJson.naver?type=BOXOFFICE";
 		
 		try {
 			
@@ -27,17 +27,32 @@ public class movieCrawling {
 					.ignoreContentType(true)
 					.execute().body();
 			
-			System.out.println(doc);
+			//System.out.println(doc);
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(doc);
 			JSONObject jsonObj = (JSONObject) obj;
 			
-			JSONArray movieArray = (JSONArray) jsonObj.get("BOXOFFICE");
+			JSONObject movieList = (JSONObject) jsonObj.get("movieChartList");
+			System.out.println(movieList);
+			System.out.println("---------------------------------------------");
+			JSONArray movieArray = (JSONArray) movieList.get("BOXOFFICE");
 			System.out.println(movieArray);
-			 
+			System.out.println("---------------------------------------------");
+
+			for(int i=0; i<movieArray.size(); i++) {
+				System.out.println("********************** "+ (i+1) + "위 영화 **********************");
+				JSONObject movieObj = (JSONObject) movieArray.get(i);
+				
+				System.out.println(movieObj.get("posterImageUrl"));
+				System.out.println(movieObj.get("movieCode"));
+		
+				
+			}
 			
-			String movieCode = (String) jsonObj.get("movieCode");
-			String movieTitle = (String) jsonObj.get("movieTitle");
+			//String movieCode = (String) jsonObj.get("movieCode");
+			String movieCode = String.valueOf(jsonObj.get("movieCode"));
+			//String movieTitle = (String) jsonObj.get("movieTitle");
+			String movieTitle = String.valueOf(jsonObj.get("movieTitle"));
 			System.out.println(movieCode);
 			System.out.println(movieTitle);
 			System.out.println("parser ==> " + parser.toString());

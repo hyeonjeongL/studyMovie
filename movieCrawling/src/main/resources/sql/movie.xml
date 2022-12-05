@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.imhj.movieCrawling.dao.movieDao">
+	
+	<insert id="insertmovie" parameterType="movieDto">
+		INSERT INTO COLT_MOVIE(
+			ID,
+			URL,
+			MOVIECODE,
+			REG_DT,
+			UPT_DT
+			) VALUES (
+			#{id},
+			#{url},
+			#{movieCode},
+			NOW(),
+			#{uptDt}
+			)
+			ON DUPLICATE KEY UPDATE
+			ID = #{id},
+			URL = #{url},
+			MOVIEXODE = #{movieCode},
+			REG_DT = #{regDt},
+			UPT_DT = NOW()
+			
+	
+	</insert>
+
+</mapper>
