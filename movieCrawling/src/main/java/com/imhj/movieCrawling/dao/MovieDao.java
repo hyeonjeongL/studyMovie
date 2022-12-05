@@ -11,12 +11,13 @@ import com.imhj.movieCrawling.dto.MovieInfoDto;
 @Repository
 public interface MovieDao {
 	
-	public void insertMovie(MovieDto dto);
+	int insertMovie(MovieDto movieDto);
+	
 	public MovieDto selectTest();
 	
-	public void insertMovieEvalut (MovieEvalutDto movieEvalutDto );
+	int insertMovieEvalut (MovieEvalutDto movieEvalutDto );
 	
-	public void insertMovieInfo (MovieInfoDto movieInfoDto);
+	int insertMovieInfo (MovieInfoDto movieInfoDto);
 	
 
 }

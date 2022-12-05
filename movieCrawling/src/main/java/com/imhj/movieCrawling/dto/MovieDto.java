@@ -10,20 +10,18 @@ public class MovieDto {
 	Date regDt;
 	Date uptDt;
 	
+	
+
 	public MovieDto() {
 		// TODO Auto-generated constructor stub
 	}
 	
 
-	public MovieDto(int id, String url, int movie_code, Date reg_dt, Date upt_dt) {
-		super();
-		this.id = id;
-		this.url = url;
-		this.movieCode = movie_code;
-		this.regDt = reg_dt;
-		this.uptDt = upt_dt;
-	}
 
+	public MovieDto(String url, int movieCode) {
+		this.url = url;
+		this.movieCode = movieCode;
+	}
 
 	public int getId() {
 		return id;

@@ -5,23 +5,19 @@
 
 	<insert id="insertMovie" parameterType="com.imhj.movieCrawling.dto.MovieDto">
 		INSERT INTO COLT_MOVIE(
-		ID,
 		URL,
-		MOVIECODE,
+		MOVIE_CODE,
 		REG_DT,
 		UPT_DT
 		) VALUES (
-		#{id},
 		#{url},
 		#{movieCode},
 		NOW(),
 		NOW()
 		)
 		ON DUPLICATE KEY UPDATE
-		ID = #{id},
 		URL = #{url},
-		MOVIEXODE = #{movieCode},
-		REG_DT = #{regDt},
+		MOVIE_CODE = #{movieCode},
 		UPT_DT = NOW()
 
 
@@ -82,7 +78,6 @@
 		MOVIECODE = #{movieCode},
 		TITLE = #{title},
 		AVGPOINT = #{avgPoint},
-		REGDT = #{regDt},
 		UPTDT = NOW()
 
 
