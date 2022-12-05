@@ -85,7 +85,7 @@ public class MovieApplication implements ApplicationRunner {
 					}
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					e.printStackTrace(); 
 				}
 				
 				
