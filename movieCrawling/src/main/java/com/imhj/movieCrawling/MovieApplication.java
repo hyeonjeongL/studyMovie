@@ -1,27 +1,32 @@
-package com.imhj.movieCrawling.service;
-
-
+package com.imhj.movieCrawling;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
 
-@Service
-public class movieCrawling {
+import com.imhj.movieCrawling.dao.MovieDao;
+
+@Component
+public class MovieApplication implements ApplicationRunner{
 	
-	public static void main(String[] args) throws Exception, InterruptedException {
-		
+	@Autowired
+	MovieDao movieDao;
+
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+
 		String url = "https://movie.naver.com/movieChartJson.naver?type=BOXOFFICE";
-		
+
 		try {
 			
-			String doc = Jsoup.connect(url)
+			String doc = null;
+			
+			doc = Jsoup.connect(url)
 					.header("Host", "movie.naver.com")
                     .header("Referer", "https://movie.naver.com/")
 					.ignoreContentType(true)
@@ -57,12 +62,12 @@ public class movieCrawling {
 			System.out.println(movieTitle);
 			System.out.println("parser ==> " + parser.toString());
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-//		Elements element = doc.select("");
-	
-		
+			System.out.println(movieDao.selectTest());
+			
+			
+			
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
-
+	}
 }

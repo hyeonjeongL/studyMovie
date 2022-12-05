@@ -2,7 +2,7 @@ package com.imhj.movieCrawling.dto;
 
 import java.util.Date;
 
-public class movieDto {
+public class MovieDto {
 	
 	int id;
 	String url;
@@ -10,12 +10,12 @@ public class movieDto {
 	Date regDt;
 	Date uptDt;
 	
-	public movieDto() {
+	public MovieDto() {
 		// TODO Auto-generated constructor stub
 	}
 	
 
-	public movieDto(int id, String url, int movie_code, Date reg_dt, Date upt_dt) {
+	public MovieDto(int id, String url, int movie_code, Date reg_dt, Date upt_dt) {
 		super();
 		this.id = id;
 		this.url = url;
