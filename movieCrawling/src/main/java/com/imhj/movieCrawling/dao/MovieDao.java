@@ -19,5 +19,7 @@ public interface MovieDao {
 	
 	int insertMovieInfo (MovieInfoDto movieInfoDto);
 	
+	int selectId (int movieCode);
+	
 
 }

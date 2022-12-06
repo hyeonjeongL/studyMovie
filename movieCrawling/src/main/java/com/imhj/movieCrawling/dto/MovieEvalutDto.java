@@ -6,7 +6,7 @@ public class MovieEvalutDto {
 	
 	int id;
 	int movieInfoId;
-	String avePoint;
+	String avgPoint;
 	String content;
 	String collectDay;
 	Date regDt;
@@ -15,14 +15,13 @@ public class MovieEvalutDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MovieEvalutDto(int id, int movieInfoId, String avePoint, String content, String collectDay, Date regDt) {
+	public MovieEvalutDto(int movieInfoId, String avgPoint, String content, String collectDay) {
 		super();
-		this.id = id;
 		this.movieInfoId = movieInfoId;
-		this.avePoint = avePoint;
+		this.avgPoint = avgPoint;
 		this.content = content;
 		this.collectDay = collectDay;
-		this.regDt = regDt;
+		
 	}
 
 	public int getId() {
@@ -41,12 +40,12 @@ public class MovieEvalutDto {
 		this.movieInfoId = movieInfoId;
 	}
 
-	public String getAvePoint() {
-		return avePoint;
+	public String getAvgPoint() {
+		return avgPoint;
 	}
 
-	public void setAvePoint(String avePoint) {
-		this.avePoint = avePoint;
+	public void setAvgPoint(String avePoint) {
+		this.avgPoint = avePoint;
 	}
 
 	public String getContent() {
@@ -75,7 +74,7 @@ public class MovieEvalutDto {
 
 	@Override
 	public String toString() {
-		return "movieEvalutDto [id=" + id + ", movieInfoId=" + movieInfoId + ", avePoint=" + avePoint + ", content="
+		return "movieEvalutDto [id=" + id + ", movieInfoId=" + movieInfoId + ", avgPoint=" + avgPoint + ", content="
 				+ content + ", collectDay=" + collectDay + ", regDt=" + regDt + "]";
 	}
 

@@ -22,25 +22,23 @@
 
 
 	</insert>
-
-	<select id="selectTest" resultType="com.imhj.movieCrawling.dto.MovieDto">
-		SELECT *
-		FROM COLT_MOVIE
-		LIMIT 1;
-
+	
+	<select id="selectId" resultType="java.lang.Integer" parameterType="int">
+	SELECT ID
+	FROM COLT_MOVIE_INFO
+	WHERE MOVIE_CODE=#{movieCode};
 	</select>
+
 
 	<insert id="insertMovieEvalut" parameterType="com.imhj.movieCrawling.dto.MovieEvalutDto">
 
-		INSERT INTO COLT_MOVIE(
-		ID,
-		MOVIE_INFO_ID
+		INSERT INTO COLT_MOVIE_EVALUT(
+		MOVIE_INFO_ID,
 		AVG_POINT,
 		CONTENT,
 		COLLECT_DAY,
 		REG_DT
 		) VALUES (
-		#{id},
 		#{movieInfoId},
 		#{avgPoint},
 		#{content},
@@ -48,38 +46,33 @@
 		NOW()
 		)
 		ON DUPLICATE KEY UPDATE
-		ID = #{id},
 		MOVIE_INFO_ID = #{movieInfoId},
 		AVG_POINT = #{avgPoint},
 		CONTENT = #{content},
-		COLLECT_DAY = #{collectDay},
-		REG_DT = #{regDt}
+		COLLECT_DAY = #{collectDay}
 
 	</insert>
 
-	<insert id="insertMovieInfo" parameterType="com.imhj.movieCrawling.dto.MovieInfoDto">
+	<insert id="insertMovieInfo" parameterType="com.imhj.movieCrawling.dto.MovieInfoDto" keyProperty="Seq">
 		INSERT INTO
-		MOVIEINFO(
-		ID,
-		MOVIECODE,
+		COLT_MOVIE_INFO(
+		MOVIE_CODE,
 		TITLE,
-		AVGPOINT,
-		REGDT,
-		UPTDT
+		AVG_POINT,
+		REG_DT,
+		UPT_DT
 		) VALUES (
-		#{id},
 		#{movieCode},
 		#{title},
 		#{avgPoint},
 		NOW(),
 		NOW()
 		) ON DUPLICATE KEY UPDATE
-		ID = #{id},
-		MOVIECODE = #{movieCode},
+		MOVIE_CODE = #{movieCode},
 		TITLE = #{title},
-		AVGPOINT = #{avgPoint},
-		UPTDT = NOW()
-
+		AVG_POINT = #{avgPoint},
+		UPT_DT = NOW()
+		
 
 	</insert>
 
