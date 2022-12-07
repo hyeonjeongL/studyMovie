@@ -15,9 +15,8 @@ public class MovieInfoDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MovieInfoDto(int id, int movieCode, String title, String avgPoint) {
+	public MovieInfoDto(int movieCode, String title, String avgPoint) {
 		super();
-		this.id = id;
 		this.movieCode = movieCode;
 		this.title = title;
 		this.avgPoint = avgPoint;

@@ -53,7 +53,7 @@
 
 	</insert>
 
-	<insert id="insertMovieInfo" parameterType="com.imhj.movieCrawling.dto.MovieInfoDto" keyProperty="Seq">
+	<insert id="insertMovieInfo" parameterType="com.imhj.movieCrawling.dto.MovieInfoDto">
 		INSERT INTO
 		COLT_MOVIE_INFO(
 		MOVIE_CODE,
@@ -74,6 +74,25 @@
 		UPT_DT = NOW()
 		
 
+	</insert>
+	
+	<insert id="insertSection" parameterType="com.imhj.movieCrawling.dto.MovieSectionDto">
+	INSERT INTO
+	COLT_MOVIE_SECTION(
+	MOVIE_INFO_ID,
+	SECTIONS,
+	REG_DT,
+	UPT_DT
+	) VALUES (
+	#{movieInfoId},
+	#{sections},
+	now(),
+	now()
+	) ON DUPLICATE KEY UPDATE
+	MOVIE_INFO_ID = #{movieInfoId},
+	SECTIONS = #{sections},
+	UPT_DT = NOW()
+	
 	</insert>
 
 </mapper>
