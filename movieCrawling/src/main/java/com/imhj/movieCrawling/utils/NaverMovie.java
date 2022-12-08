@@ -66,11 +66,11 @@ public class NaverMovie {
 
 					movieDtoList.add(dto);
 
-
+//파이널이 enum
 
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				e.printStackTrace();  //에러메세지를  세세하게 분
 			}
 		}
 
@@ -92,10 +92,10 @@ public class NaverMovie {
 				String avgPoint = movieDiv.select("#actualPointPersentBasic > div > span > span").text();
 				int movieCode = movieDto.getMovieCode();
 
-				MovieInfoDto movieInfoDto = new MovieInfoDto(movieCode, title, avgPoint, movieDto.getMovieSection());
+				MovieInfoDto movieInfoDto = new MovieInfoDto(movieCode, title, avgPoint, movieDto.getMovieSection());//디자인패턴에 대해서 공부 할 것 
 				movieInfoDtoList.add(movieInfoDto);
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 
 		}
@@ -131,10 +131,8 @@ public class NaverMovie {
 		for (MovieInfoDto movieInfoDto : movieInfoDtoList) {
 			for (int j = 1; j < 3; j++) {
 				try {
-					String evalUrl = "https://movie.naver.com/movie/bi/mi/pointWriteFormList.naver?code="
-							+ movieInfoDto.getMovieCode()
-							+ "&type=after&isActualPointWriteExecute=false&isMileageSubscriptionAlready=false&isMileageSubscriptionReject=false&page="
-							+ j;
+					String evalUrl = String.format("https://movie.naver.com/movie/bi/mi/pointWriteFormList.naver?code=%s"
+							+ "&type=after&isActualPointWriteExecute=false&isMileageSubscriptionAlready=false&isMileageSubscriptionReject=false&page=%d", movieInfoDto.getMovieCode(),j);
 					Document doc = Jsoup.connect(evalUrl).header("Host", "movie.naver.com").get();
 
 					Elements evalutDiv = doc.select("div.score_result>ul>li");
@@ -151,7 +149,7 @@ public class NaverMovie {
 						movieEvalutDtoList.add(movieEvalutDto);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 		}
