@@ -53,7 +53,7 @@
 
 	</insert>
 
-	<insert id="insertMovieInfo" parameterType="com.imhj.movieCrawling.dto.MovieInfoDto">
+	<insert id="insertMovieInfo" parameterType="com.imhj.movieCrawling.dto.MovieInfoDto" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO
 		COLT_MOVIE_INFO(
 		MOVIE_CODE,

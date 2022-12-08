@@ -9,6 +9,7 @@ public class MovieDto {
 	int movieCode;
 	Date regDt;
 	Date uptDt;
+	String movieSection;
 	
 	
 
@@ -18,9 +19,10 @@ public class MovieDto {
 	
 
 
-	public MovieDto(String url, int movieCode) {
+	public MovieDto(String url, int movieCode, String movieSection) {
 		this.url = url;
 		this.movieCode = movieCode;
+		this.movieSection = movieSection;
 	}
 
 	public int getId() {
@@ -62,12 +64,30 @@ public class MovieDto {
 	public void setUptDt(Date uptDt) {
 		this.uptDt = uptDt;
 	}
+	
+	
+
+	public String getMovieSection() {
+		return movieSection;
+	}
+
+
+
+	public void setMovieSection(String movieSection) {
+		this.movieSection = movieSection;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "movieDto [id=" + id + ", url=" + url + ", movie_code=" + movieCode + ", reg_dt=" + regDt + ", upt_dt="
-				+ uptDt + "]";
+		return "MovieDto [id=" + id + ", url=" + url + ", movieCode=" + movieCode + ", regDt=" + regDt + ", uptDt="
+				+ uptDt + ", movieSection=" + movieSection + "]";
 	}
+
+
+
+	
 	
 	
 	

@@ -10,18 +10,21 @@ public class MovieInfoDto {
 	String avgPoint;
 	Date regDt;
 	Date uptDt;
+	String movieSection;
 	
 	public MovieInfoDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MovieInfoDto(int movieCode, String title, String avgPoint) {
+	public MovieInfoDto(int movieCode, String title, String avgPoint, String movieSection) {
 		super();
 		this.movieCode = movieCode;
 		this.title = title;
 		this.avgPoint = avgPoint;
+		this.movieSection = movieSection;
 	}
 
+	
 	public int getId() {
 		return id;
 	}
@@ -70,11 +73,21 @@ public class MovieInfoDto {
 		this.uptDt = uptDt;
 	}
 
+	public String getMovieSection() {
+		return movieSection;
+	}
+
+	public void setMovieSection(String movieSection) {
+		this.movieSection = movieSection;
+	}
+
 	@Override
 	public String toString() {
-		return "movieInfoDto [id=" + id + ", movieCode=" + movieCode + ", title=" + title + ", avgPoint=" + avgPoint
-				+ ", regDt=" + regDt + ", uptDt=" + uptDt + "]";
+		return "MovieInfoDto [id=" + id + ", movieCode=" + movieCode + ", title=" + title + ", avgPoint=" + avgPoint
+				+ ", regDt=" + regDt + ", uptDt=" + uptDt + ", movieSection=" + movieSection + "]";
 	}
+
+	
 	
 
 	

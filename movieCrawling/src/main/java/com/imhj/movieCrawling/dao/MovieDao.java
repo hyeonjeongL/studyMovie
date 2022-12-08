@@ -12,6 +12,7 @@ import com.imhj.movieCrawling.dto.MovieSectionDto;
 @Repository
 public interface MovieDao {
 	
+	
 	int insertMovie(MovieDto movieDto);
 	
 	public MovieDto selectTest();
