@@ -27,9 +27,6 @@ import com.imhj.movieCrawling.dto.MovieSectionDto;
 @Component
 public class NaverMovie {
 
-	@Autowired
-	static MovieDao movieDao;
-
 	public NaverMovie() {
 
 	}
@@ -105,7 +102,6 @@ public class NaverMovie {
 
 	public static List<MovieSectionDto> parsingMovieSection(List<MovieInfoDto> movieInfoDtoList) {
 		List<MovieSectionDto> movieSectionDtoList = new ArrayList<>();
-		List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
 
 		for (MovieInfoDto movieInfoDto : movieInfoDtoList) {
 			System.out.println(movieInfoDto.getMovieCode());
@@ -123,10 +119,6 @@ public class NaverMovie {
 
 	public static List<MovieEvalutDto> parsingMoiveEvalut(List<MovieInfoDto> movieInfoDtoList) {
 		List<MovieEvalutDto> movieEvalutDtoList = new ArrayList<>();
-
-		List<MovieDto> movieDtoList = new ArrayList<>();
-		// List<MovieInfoDto> movieInfoDtoList =
-		// NaverMovie.parsingMovieInfo(movieDtoList);
 
 		for (MovieInfoDto movieInfoDto : movieInfoDtoList) {
 			for (int j = 1; j < 3; j++) {

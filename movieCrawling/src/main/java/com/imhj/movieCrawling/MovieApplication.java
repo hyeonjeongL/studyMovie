@@ -52,7 +52,11 @@ public class MovieApplication implements ApplicationRunner {
 		List<MovieEvalutDto> movieEvalutDtoList = NaverMovie.parsingMoiveEvalut(movieInfoDtoList);
 		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
 			movieDao.insertMovieEvalut(movieEvalutDto);
-
+		
+		
+	 CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+		 return "hello";
+	 });
 	}
 
 }
