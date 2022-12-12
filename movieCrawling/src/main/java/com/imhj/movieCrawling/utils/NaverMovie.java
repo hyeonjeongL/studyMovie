@@ -24,12 +24,27 @@ import com.imhj.movieCrawling.dto.MovieEvalutDto;
 import com.imhj.movieCrawling.dto.MovieInfoDto;
 import com.imhj.movieCrawling.dto.MovieSectionDto;
 
+
 @Component
-public class NaverMovie {
-
-	public NaverMovie() {
-
+public class NaverMovie implements Runnable{
+	
+	@Override
+	public void run() {
+		
 	}
+	
+//	private final String threadName;
+//
+//	public NaverMovie(String threadName) {
+//		this.threadName = threadName;
+//
+//	}
+//	
+//	public static void main(String[] args) {
+//		NaverMovie runnable1 = new NaverMovie("multiThread1");
+//		NaverMovie runnable2 = new NaverMovie("multiThread2");
+//		NaverMovie runnable3 = new NaverMovie("multiThread3");
+//	}
 
 	public static List<MovieDto> parsingMovie() {
 		List<MovieDto> movieDtoList = new ArrayList<>();
@@ -109,7 +124,7 @@ public class NaverMovie {
 			int id = movieInfoDto.getId();
 			MovieSectionDto movieSectionDto = new MovieSectionDto(id, movieInfoDto.getMovieSection());
 			System.out.println(movieSectionDto);
-			System.out.println(movieInfoDto.getId());
+			//System.out.println(movieInfoDto.getId());
 
 			movieSectionDtoList.add(movieSectionDto);
 		}
@@ -128,7 +143,7 @@ public class NaverMovie {
 					Document doc = Jsoup.connect(evalUrl).header("Host", "movie.naver.com").get();
 
 					Elements evalutDiv = doc.select("div.score_result>ul>li");
-
+					System.out.println("<<<<<<<<<<"+movieInfoDto.getTitle()+j+"페이지");
 					for (Element el : evalutDiv) {
 						String avgPointEval = el.select("div.star_score > em").text();
 						System.out.println("점수 : " + avgPointEval);
@@ -136,6 +151,7 @@ public class NaverMovie {
 						System.out.println("댓글 쓴 날 : " + collectDay);
 						String content = el.select("div.score_reple > p").text();
 						System.out.println("댓글 내용 : " + content);
+						System.out.println("-------------------------------------------");
 						
 						MovieEvalutDto movieEvalutDto = new MovieEvalutDto(movieInfoDto.getId(), avgPointEval, content, collectDay);
 						movieEvalutDtoList.add(movieEvalutDto);

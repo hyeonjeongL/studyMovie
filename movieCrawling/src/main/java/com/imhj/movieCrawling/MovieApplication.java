@@ -38,20 +38,20 @@ public class MovieApplication implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		
 		List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
-		for (MovieDto movieDto : movieDtoList)
-			movieDao.insertMovie(movieDto);
+//		for (MovieDto movieDto : movieDtoList)
+//			movieDao.insertMovie(movieDto);
 
 		List<MovieInfoDto> movieInfoDtoList = NaverMovie.parsingMovieInfo(movieDtoList);
-		for (MovieInfoDto movieInfoDto : movieInfoDtoList)
-			movieDao.insertMovieInfo(movieInfoDto);
+//		for (MovieInfoDto movieInfoDto : movieInfoDtoList)
+//			movieDao.insertMovieInfo(movieInfoDto);
 
 		List<MovieSectionDto> movieSectionDtoList = NaverMovie.parsingMovieSection(movieInfoDtoList);
-		for (MovieSectionDto movieSectionDto : movieSectionDtoList)
-			movieDao.insertSection(movieSectionDto);
+//		for (MovieSectionDto movieSectionDto : movieSectionDtoList)
+//			movieDao.insertSection(movieSectionDto);
 
 		List<MovieEvalutDto> movieEvalutDtoList = NaverMovie.parsingMoiveEvalut(movieInfoDtoList);
-		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
-			movieDao.insertMovieEvalut(movieEvalutDto);
+//		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
+//			movieDao.insertMovieEvalut(movieEvalutDto);
 		
 		
 	 CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
