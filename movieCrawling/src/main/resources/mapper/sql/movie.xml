@@ -46,7 +46,6 @@
 		NOW()
 		)
 		ON DUPLICATE KEY UPDATE
-		MOVIE_INFO_ID = #{movieInfoId},
 		AVG_POINT = #{avgPoint},
 		CONTENT = #{content},
 		COLLECT_DAY = #{collectDay}
@@ -89,8 +88,6 @@
 	now(),
 	now()
 	) ON DUPLICATE KEY UPDATE
-	MOVIE_INFO_ID = #{movieInfoId},
-	SECTIONS = #{sections},
 	UPT_DT = NOW()
 	
 	</insert>

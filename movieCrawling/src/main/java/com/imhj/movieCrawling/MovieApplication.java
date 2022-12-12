@@ -6,7 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -36,27 +40,46 @@ public class MovieApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+
+		NaverMovie naver1 = new NaverMovie();
+		NaverMovie naver2 = new NaverMovie();
+		NaverMovie naver3= new NaverMovie();
+		naver1.call();
+		naver2.call();
+		naver3.call();
+		for (int i=0; i<3;i++) {
+			List<Future<Map<String,String>>> futures = new ArrayList<>();
+			ExecutorService executor = Executors.newFixedThreadPool(i);
+			futures.add(null);
+		}
+		//forloop
+		
+//			Map<String, String> urls = ParsingUrl.getParsingUrl();
+//			for (String key : urls.keySet()) {
+//				String url = urls.get(key);
 		
 		List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
-//		for (MovieDto movieDto : movieDtoList)
-//			movieDao.insertMovie(movieDto);
+		// List<CompletableFuture<MovieDto>> futureList = new ArrayList<>();
+		// for (MovieDto movieDto : movieDtoList) {
+		// futureList.add(CompletableFuture.supplyAsync(()-> {return movieDto;}));
+		// movieDao.insertMovie(movieDto);
+		// }
 
 		List<MovieInfoDto> movieInfoDtoList = NaverMovie.parsingMovieInfo(movieDtoList);
-//		for (MovieInfoDto movieInfoDto : movieInfoDtoList)
-//			movieDao.insertMovieInfo(movieInfoDto);
+		// List<CompletableFuture<MovieInfoDto>> futureList2 = new ArrayList<>();
+		// for (MovieInfoDto movieInfoDto : movieInfoDtoList) {
+		// futureList2.add(CompletableFuture.supplyAsync(()-> {return movieInfoDto;}));
+		// movieDao.insertMovieInfo(movieInfoDto);
+		// }
 
 		List<MovieSectionDto> movieSectionDtoList = NaverMovie.parsingMovieSection(movieInfoDtoList);
 //		for (MovieSectionDto movieSectionDto : movieSectionDtoList)
 //			movieDao.insertSection(movieSectionDto);
-
-		List<MovieEvalutDto> movieEvalutDtoList = NaverMovie.parsingMoiveEvalut(movieInfoDtoList);
+//
+//	List<MovieEvalutDto> movieEvalutDtoList = NaverMovie.parsingMoiveEvalut(movieInfoDtoList);
 //		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
 //			movieDao.insertMovieEvalut(movieEvalutDto);
-		
-		
-	 CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
-		 return "hello";
-	 });
+
 	}
 
 }
