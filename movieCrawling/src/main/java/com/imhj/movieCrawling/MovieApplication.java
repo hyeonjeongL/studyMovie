@@ -41,38 +41,36 @@ public class MovieApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 
-		NaverMovie naver1 = new NaverMovie();
-		NaverMovie naver2 = new NaverMovie();
-		NaverMovie naver3= new NaverMovie();
-		naver1.call();
-		naver2.call();
-		naver3.call();
-		for (int i=0; i<3;i++) {
-			List<Future<Map<String,String>>> futures = new ArrayList<>();
-			ExecutorService executor = Executors.newFixedThreadPool(i);
-			futures.add(null);
-		}
-		//forloop
+			Map<String, String> urls = ParsingUrl.getParsingUrl();
+			Map<String, String> parsingPage = new HashMap<>(1) ;
 		
-//			Map<String, String> urls = ParsingUrl.getParsingUrl();
-//			for (String key : urls.keySet()) {
-//				String url = urls.get(key);
-		
-		List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
+			for (String key : urls.keySet()) {
+				String url = urls.get(key);
+				parsingPage.put(key, url);
+				ExecutorService executor = Executors.newCachedThreadPool();
+				List<Future<Map<String,String>>> futures = new ArrayList<>();
+				//Future 비동기로 수해한 쓰레드가 수행한 결과를 담는다.
+				futures.add(executor.submit(new NaverMovie(parsingPage)));
+				
+			//	parsingPage.clear();
+				
+				executor.shutdown();
+			}
+		//List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
 		// List<CompletableFuture<MovieDto>> futureList = new ArrayList<>();
 		// for (MovieDto movieDto : movieDtoList) {
 		// futureList.add(CompletableFuture.supplyAsync(()-> {return movieDto;}));
 		// movieDao.insertMovie(movieDto);
 		// }
 
-		List<MovieInfoDto> movieInfoDtoList = NaverMovie.parsingMovieInfo(movieDtoList);
+//		List<MovieInfoDto> movieInfoDtoList = NaverMovie.parsingMovieInfo(movieDtoList);
 		// List<CompletableFuture<MovieInfoDto>> futureList2 = new ArrayList<>();
 		// for (MovieInfoDto movieInfoDto : movieInfoDtoList) {
 		// futureList2.add(CompletableFuture.supplyAsync(()-> {return movieInfoDto;}));
 		// movieDao.insertMovieInfo(movieInfoDto);
 		// }
 
-		List<MovieSectionDto> movieSectionDtoList = NaverMovie.parsingMovieSection(movieInfoDtoList);
+//		List<MovieSectionDto> movieSectionDtoList = NaverMovie.parsingMovieSection(movieInfoDtoList);
 //		for (MovieSectionDto movieSectionDto : movieSectionDtoList)
 //			movieDao.insertSection(movieSectionDto);
 //
@@ -80,8 +78,21 @@ public class MovieApplication implements ApplicationRunner {
 //		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
 //			movieDao.insertMovieEvalut(movieEvalutDto);
 
+//		try {
+//			if(!executor.awaitTermination(5, TimeUnit.MINUTES)) {
+//				//타임아웃 후에도 아직 실행이 끝나지 않았다.
+//				executor.shutdown();
+//			}
+//		}catch (Exception e) {
+//			// 종료 대기 시에 뭔가 오류가 발생했다.
+//			System.out.println(e.getMessage());
+//			executor.shutdown();
+//		}
+		
+			
 	}
 
+	
 }
 
 //-------------------------------------------------------------------------------------------------------------------

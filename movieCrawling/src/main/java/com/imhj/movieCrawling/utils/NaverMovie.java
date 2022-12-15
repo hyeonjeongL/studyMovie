@@ -35,82 +35,35 @@ import com.imhj.movieCrawling.dto.MovieInfoDto;
 import com.imhj.movieCrawling.dto.MovieSectionDto;
 
 @Component
-public class NaverMovie implements Callable<Map<String,String>>{
-	private static final String MSG_TEMPLATE = "출력 중입니다.";
+public class NaverMovie implements Callable<Map<String, String>> {
+//Callable Runnable과 유사하지만 Runable은 return값이 void고 Callable은 작업할 내용과 리턴값을 지정 할 수 있다.
+	@Autowired
+	MovieDao movieDao;
 	
-
-	@Override
-	public Map<String,String> call() throws Exception {
-		//Thread.sleep(1000);
-		String url="";
-		Map<String, String> urls = ParsingUrl.getParsingUrl();
-		for (String key : urls.keySet()) {
-			url = urls.get(key);
-		}
-		System.out.println("두통오져");
-		System.out.println(Thread.currentThread().getName());
-
-		
-		//스레드 동시 실행 수는 3
-		
-		ExecutorService	executorService = Executors.newFixedThreadPool(3);
-		
-		List<Future<String>> list = new ArrayList<Future<String>>();
-		
-		
-		executorService.shutdown();
-		
-		try {
-			if(!executorService.awaitTermination(5, TimeUnit.MINUTES)) {
-				//타임아웃 후에도 아직 실행이 끝나지 않았다.
-				executorService.shutdown();
-			}
-		}catch (Exception e) {
-			// 종료 대기 시에 뭔가 오류가 발생했다.
-			System.out.println(e.getMessage());
-			executorService.shutdown();
-		}
-			return urls;
+	Map<String,String> localPage;
+	
+	public NaverMovie() {
+		// TODO Auto-generated constructor stub
 	}
 	
-		
-//		List<Object> list = new ArrayList<>();
-//		list.add(list);
-//		System.out.println(String.format(MSG_TEMPLATE));
-//		System.out.println(Thread.currentThread().getName());
-		
-	
-	public static void main(String[] args) {
-		
+	public NaverMovie(Map<String,String> parsingPage) {
+		// TODO Auto-generated constructor stub
+//		System.out.println("asdfasd-=> " + parsingPage.get("BOXOFFICE"));
+//		System.out.println("asdfasd-=> " + parsingPage.get("COMMING"));
+//		System.out.println("asdfasd-=> " + parsingPage.get("CURRENT"));
+		this.localPage = parsingPage;
 	}
-
-//	public static void main(String[] args) {
-//
-//		Thread thread = new Thread();
-//		thread.start();
-//		for (int i = 0; i < 10; i++) {
-//			//System.out.println(i + "번째 " + Thread.currentThread().getName() + "시작");
-//System.out.println("쓰레드 시작");
-//		}
-//	}
-//
-//		static class Task implements Runnable {
-//			
-//		@Override
-//		public void run() {
-//			System.out.println(">>>>>>>>" + Thread.currentThread().getName());
-//			for (int i = 0; i < 5; i++) {
-//				System.out.println(Thread.currentThread().getName() + ":" + i);
-//			}
-//			}
-//	}
-
-	public static List<MovieDto> parsingMovie() throws Exception{
+	
+	
+	public static List<MovieDto> parsingMovie() throws Exception {
 		List<MovieDto> movieDtoList = new ArrayList<>();
-
-		Map<String, String> urls = ParsingUrl.getParsingUrl();
-		for (String key : urls.keySet()) {
-			String url = urls.get(key);
+		String url="";
+		String key="";
+			NaverMovie nm = new NaverMovie();
+			nm.localPage.get(key);
+			nm.localPage.get(url);
+			System.out.println(nm);
+			
 
 			try {
 
@@ -142,9 +95,9 @@ public class NaverMovie implements Callable<Map<String,String>>{
 			} catch (Exception e) {
 				e.printStackTrace(); // 에러메세지를 세세하게 분
 			}
-		}
 
-		System.out.println(">>>>>>>>>>><<<<<<<<<<<<"+Thread.currentThread().getName());
+		System.out.println(">>>>>>>>>>>1<<<<<<<<<<<<" + Thread.currentThread().getName());
+		
 		return movieDtoList;
 	}
 
@@ -174,7 +127,7 @@ public class NaverMovie implements Callable<Map<String,String>>{
 			}
 
 		}
-		System.out.println(">>>>>>>>>>><<<<<<<<<<<<"+Thread.currentThread().getName());
+		System.out.println(">>>>>>>>>>>2<<<<<<<<<<<<" + Thread.currentThread().getName());
 		return movieInfoDtoList;
 	}
 
@@ -191,7 +144,7 @@ public class NaverMovie implements Callable<Map<String,String>>{
 
 			movieSectionDtoList.add(movieSectionDto);
 		}
-		System.out.println(">>>>>>>>>>><<<<<<<<<<<<"+Thread.currentThread().getName());
+		System.out.println(">>>>>>>>>>>3<<<<<<<<<<<<" + Thread.currentThread().getName());
 		return movieSectionDtoList;
 	}
 
@@ -229,8 +182,33 @@ public class NaverMovie implements Callable<Map<String,String>>{
 		}
 		return movieEvalutDtoList;
 	}
-
-
 	
+	
+	@Override
+	public Map<String, String> call() throws Exception {
+
+		System.out.println(Thread.currentThread().getName());
+
+
+		List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
+		for (MovieDto movieDto : movieDtoList)
+			movieDao.insertMovie(movieDto);
+		
+		System.out.println("final ==> " + localPage.get("COMMING"));
+		List<MovieInfoDto> movieInfoDtoList = NaverMovie.parsingMovieInfo(movieDtoList);
+		for (MovieInfoDto movieInfoDto : movieInfoDtoList)
+			movieDao.insertMovieInfo(movieInfoDto);
+		
+		List<MovieSectionDto> movieSectionDtoList = NaverMovie.parsingMovieSection(movieInfoDtoList);
+		for (MovieSectionDto movieSectionDto : movieSectionDtoList)
+			movieDao.insertSection(movieSectionDto);
+		
+		List<MovieEvalutDto> movieEvalutDtoList = NaverMovie.parsingMoiveEvalut(movieInfoDtoList);
+		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
+			movieDao.insertMovieEvalut(movieEvalutDto);
+		
+		return localPage;
+
+	}
 
 }
