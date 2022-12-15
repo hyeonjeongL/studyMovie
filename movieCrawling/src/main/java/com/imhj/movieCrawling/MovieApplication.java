@@ -45,16 +45,17 @@ public class MovieApplication implements ApplicationRunner {
 			Map<String, String> parsingPage = new HashMap<>(1) ;
 		
 			for (String key : urls.keySet()) {
+				parsingPage.clear();
 				String url = urls.get(key);
 				parsingPage.put(key, url);
 				ExecutorService executor = Executors.newCachedThreadPool();
 				List<Future<Map<String,String>>> futures = new ArrayList<>();
-				//Future 비동기로 수해한 쓰레드가 수행한 결과를 담는다.
+				//Future 비동기로 수행한 쓰레드가 수행한 결과를 담는다.
 				futures.add(executor.submit(new NaverMovie(parsingPage)));
 				
-			//	parsingPage.clear();
+			System.out.println(futures.get(0));
 				
-				executor.shutdown();
+				//executor.shutdown();
 			}
 		//List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
 		// List<CompletableFuture<MovieDto>> futureList = new ArrayList<>();

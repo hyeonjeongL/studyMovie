@@ -48,21 +48,56 @@ public class NaverMovie implements Callable<Map<String, String>> {
 	
 	public NaverMovie(Map<String,String> parsingPage) {
 		// TODO Auto-generated constructor stub
-//		System.out.println("asdfasd-=> " + parsingPage.get("BOXOFFICE"));
-//		System.out.println("asdfasd-=> " + parsingPage.get("COMMING"));
-//		System.out.println("asdfasd-=> " + parsingPage.get("CURRENT"));
+		System.out.println(parsingPage);
 		this.localPage = parsingPage;
 	}
 	
+	@Override
+	synchronized public Map<String, String> call() throws Exception {
+		String url = "";
+		String key = "";
+		
+		for (Map.Entry<String, String> page: localPage.entrySet()) {
+		  //  System.out.println("key: " + page.getKey() + " value: " + page.getValue());
+		url =  String.valueOf(page.getValue());
+		key = String.valueOf(page.getKey());
+		
+		}
+		List<MovieDto> movieDtoList = NaverMovie.parsingMovie(url, key);
+		for (MovieDto movieDto : movieDtoList) {
+			System.out.println(url);
+			System.out.println(key);
+			movieDao.insertMovie(movieDto);
+			System.out.println(movieDto);
+		}
+		
+		System.out.println("final ==> " + localPage.get("COMMING"));
+		List<MovieInfoDto> movieInfoDtoList = NaverMovie.parsingMovieInfo(movieDtoList);
+		for (MovieInfoDto movieInfoDto : movieInfoDtoList)
+			movieDao.insertMovieInfo(movieInfoDto);
+		
+		List<MovieSectionDto> movieSectionDtoList = NaverMovie.parsingMovieSection(movieInfoDtoList);
+		for (MovieSectionDto movieSectionDto : movieSectionDtoList)
+			movieDao.insertSection(movieSectionDto);
+		
+		List<MovieEvalutDto> movieEvalutDtoList = NaverMovie.parsingMoiveEvalut(movieInfoDtoList);
+		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
+			movieDao.insertMovieEvalut(movieEvalutDto);
+
+
+		return localPage;
+	}
 	
-	public static List<MovieDto> parsingMovie() throws Exception {
+	public static List<MovieDto> parsingMovie(String url, String key) throws Exception {
 		List<MovieDto> movieDtoList = new ArrayList<>();
-		String url="";
-		String key="";
-			NaverMovie nm = new NaverMovie();
-			nm.localPage.get(key);
-			nm.localPage.get(url);
-			System.out.println(nm);
+//		Map<String, String> parsingPage = new HashMap<>(1) ;
+//		String url="";
+//		String key="";
+//			NaverMovie nm = new NaverMovie(parsingPage);
+//			System.out.println(""+nm.localPage);
+//			nm.localPage.get("BOXOFFICE");
+//			nm.localPage.get("https://movie.naver.com/movieChartJson.naver?type=BOXOFFICE");
+//			System.out.println(nm);
 			
 
 			try {
@@ -93,10 +128,10 @@ public class NaverMovie implements Callable<Map<String, String>> {
 
 				}
 			} catch (Exception e) {
-				e.printStackTrace(); // 에러메세지를 세세하게 분
+				System.out.println(e.getMessage()); // 에러메세지를 세세하게 분
 			}
-
 		System.out.println(">>>>>>>>>>>1<<<<<<<<<<<<" + Thread.currentThread().getName());
+		System.out.println(movieDtoList);
 		
 		return movieDtoList;
 	}
@@ -184,31 +219,6 @@ public class NaverMovie implements Callable<Map<String, String>> {
 	}
 	
 	
-	@Override
-	public Map<String, String> call() throws Exception {
-
-		System.out.println(Thread.currentThread().getName());
-
-
-		List<MovieDto> movieDtoList = NaverMovie.parsingMovie();
-		for (MovieDto movieDto : movieDtoList)
-			movieDao.insertMovie(movieDto);
-		
-		System.out.println("final ==> " + localPage.get("COMMING"));
-		List<MovieInfoDto> movieInfoDtoList = NaverMovie.parsingMovieInfo(movieDtoList);
-		for (MovieInfoDto movieInfoDto : movieInfoDtoList)
-			movieDao.insertMovieInfo(movieInfoDto);
-		
-		List<MovieSectionDto> movieSectionDtoList = NaverMovie.parsingMovieSection(movieInfoDtoList);
-		for (MovieSectionDto movieSectionDto : movieSectionDtoList)
-			movieDao.insertSection(movieSectionDto);
-		
-		List<MovieEvalutDto> movieEvalutDtoList = NaverMovie.parsingMoiveEvalut(movieInfoDtoList);
-		for (MovieEvalutDto movieEvalutDto : movieEvalutDtoList)
-			movieDao.insertMovieEvalut(movieEvalutDto);
-		
-		return localPage;
-
-	}
+	
 
 }
